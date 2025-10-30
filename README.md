@@ -76,13 +76,13 @@ python manage.py runserver
 - Simplicidad primero por lo que se prioriza velocidad de entrega sobre funcionalidades avanzadas.
 - SQLite en desarrollo, fácil y sin configuración.
 - Tailwind vía CDN (sin build) para desarrollo y arranque rápido.
-- API DRF mínima y sin autenticación ideal para el desafío pero no apto para producción sin seguridad, auth, permisos, rate limiting,etc.
+- API DRF mínima y sin autenticación es ideal para el desafío pero no apto para producción sin seguridad, auth, permisos, rate limiting,etc.
 - Sin paginación ni filtros avanzados en API, pero puede generar problemas rendimiento con grandes volúmenes de datos.
 - Exportación CSV generada en servidor sin colas de forma simple pero puede bloquear o tardar con datasets grandes.
 - Validación y manejo de errores básicos suficientes para el desafío pero faltan mensajes y validacions más extra.
 - Sin pruebas por tiempo. 
 - CBV/GCBV sobre FBV, menos código y mayor reutilización y rapidez (ListView/CreateView/UpdateView/View)
-- POST para toggle/eliminar/crear/editar en UI HTMX, simplifica formularios y CSRF pero no cumple reglas de REST puras estricta.
+- POST para toggle/eliminar/crear/editar en UI con HTMX, simplifica formularios y CSRF pero no cumple reglas de REST puras estricta.
 - Entorno de desarrollo con venv en vez de Docker. Más rápido para desarrollo local y menor fricción pero menor reproducibilidad entre distintos equipos.
 
 ### Próximas mejoras sugeridas
@@ -90,4 +90,4 @@ python manage.py runserver
 - Django auth para UI y JWT/Token para API (DRF), permisos por vista y rate limiting.
 - API más robusta con paginación, filtros, ordenamiento, validación avanzada.
 - Exportación asíncrona de tal forma mover CSV a tareas en segundo plano usando Celery.
-- Uso de contenedores Docker y Docker Compose con Postgres y Redis para mejorar compativilidad en producción y desarrollo y tener alta escalabilidad.
+- Uso de contenedores Docker y Docker Compose con Postgres y Redis para mejorar compatibilidad en producción y desarrollo y tener alta escalabilidad.
