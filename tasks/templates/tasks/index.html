@@ -1,0 +1,105 @@
+<!-- tasks/templates/tasks/index.html -->
+{% extends "tasks/base.html" %}
+
+{% block title %}Mis Tareas{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Header con estadísticas -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between mb-2">
+            <h2 class="text-2xl font-semibold text-gray-800">
+                Mis Tareas
+            </h2>
+            <a href="{% url 'tasks:export-csv' %}"
+               class="inline-flex items-center px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 text-sm">
+                Exportar CSV
+            </a>
+        </div>
+        <!-- Contenedor de estadísticas -->
+        <div id="task-stats"
+             hx-get="{% url 'tasks:stats' %}"
+             hx-trigger="load, taskChanged from:body"
+             hx-swap="outerHTML"
+             class="flex items-center space-x-6 text-sm text-gray-600">
+            <span class="flex items-center">
+                <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                Total: <strong class="ml-1">{{ tasks.count }}</strong>
+            </span>
+            <span class="flex items-center">
+                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                Completadas: <strong class="ml-1">{{ completed_count }}</strong>
+            </span>
+            <span class="flex items-center">
+                <span class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
+                Pendientes: <strong class="ml-1">{{ pending_count }}</strong>
+            </span>
+        </div>
+    </div>
+    
+    <!-- Filtros -->
+    <div class="mb-6 flex flex-wrap gap-2">
+        <button hx-get="{% url 'tasks:index' %}?filter=all" 
+                hx-target="#task-list"
+                hx-push-url="true"
+                class="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:border-blue-500 hover:text-blue-600 transition-colors font-medium text-sm
+                       {% if not request.GET.filter or request.GET.filter == 'all' %}border-blue-500 text-blue-600 bg-blue-50{% endif %}">
+            📋 Todas
+        </button>
+        <button hx-get="{% url 'tasks:index' %}?filter=pending" 
+                hx-target="#task-list"
+                hx-push-url="true"
+                class="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:border-yellow-500 hover:text-yellow-600 transition-colors font-medium text-sm
+                       {% if request.GET.filter == 'pending' %}border-yellow-500 text-yellow-600 bg-yellow-50{% endif %}">
+            ⏳ Pendientes
+        </button>
+        <button hx-get="{% url 'tasks:index' %}?filter=completed" 
+                hx-target="#task-list"
+                hx-push-url="true"
+                class="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:border-green-500 hover:text-green-600 transition-colors font-medium text-sm
+                       {% if request.GET.filter == 'completed' %}border-green-500 text-green-600 bg-green-50{% endif %}">
+            ✅ Completadas
+        </button>
+    </div>
+    
+    <!-- Formulario de creación (colapsable, cerrado por defecto) -->
+    <details id="create-panel" class="mb-8">
+        <summary class="cursor-pointer select-none list-none flex items-center justify-between bg-white border border-gray-200 rounded-lg px-4 py-3 text-gray-800 font-medium hover:bg-gray-50">
+            <span class="flex items-center space-x-2">
+                <span class="text-xl">➕</span>
+                <span>Nueva tarea</span>
+            </span>
+            <span class="text-sm text-gray-500">Click para abrir/cerrar</span>
+        </summary>
+        <div class="mt-3">
+            {% include "tasks/partials/task_form_partial.html" %}
+        </div>
+    </details>
+    
+    <!-- Lista de tareas -->
+    <div id="task-list" class="space-y-2">
+        {% for task in tasks %}
+            {% include "tasks/partials/task_row_partial.html" %}
+        {% empty %}
+            <div class="text-center py-16 bg-white rounded-lg shadow-sm">
+                <div class="text-6xl mb-4">📝</div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">
+                    No hay tareas
+                    {% if request.GET.filter == 'pending' %}
+                        pendientes
+                    {% elif request.GET.filter == 'completed' %}
+                        completadas
+                    {% endif %}
+                </h3>
+                <p class="text-gray-500">
+                    {% if request.GET.filter %}
+                        Prueba cambiando el filtro o crea una nueva tarea.
+                    {% else %}
+                        ¡Crea tu primera tarea arriba para empezar!
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
