@@ -4,7 +4,7 @@ Aplicación de tareas con Django + HTMX + Tailwind + DRF (SQLite).
 Entorno de desarrollo WSL2 - UBUNTU
 
 
-## ✨ Features Principales
+## Features Principales
 
 - **CRUD completo sin recargas** - Gracias a HTMX
 - **Filtros interactivos** - Todas/Pendientes/Completadas
@@ -86,7 +86,7 @@ python manage.py runserver
 - Entorno de desarrollo con venv en vez de Docker. Más rápido para desarrollo local y menor fricción pero menor reproducibilidad entre distintos equipos.
 
 ### Próximas mejoras sugeridas
-- Stats enriquecido y creación de dashboard con`pandas y `Chart.js o Plotly en frontend.
+- Stats enriquecido y creación de dashboard con pandas y Chart.js o Plotly en frontend.
 - Django auth para UI y JWT/Token para API (DRF), permisos por vista y rate limiting.
 - API más robusta con paginación, filtros, ordenamiento, validación avanzada.
 - Exportación asíncrona de tal forma mover CSV a tareas en segundo plano usando Celery.
