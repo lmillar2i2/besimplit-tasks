@@ -1,4 +1,4 @@
-# Besimplit Tasks
+# Be Tasks
 
 Aplicación de tareas con Django + HTMX + Tailwind + DRF (SQLite).
 Entorno de desarrollo WSL2 - UBUNTU
