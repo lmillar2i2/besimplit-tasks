@@ -1,4 +1,6 @@
 <!-- tasks/templates/tasks/partials/stats_partial.html -->
+<!-- stats_partial.html cuenta tareas (total, completadas, pendientes).
+    lo pide HTMX desde la página principal y se reemplaza completo. -->
 <div id="task-stats" class="flex items-center space-x-6 text-sm text-gray-700">
     <span>Total: <strong class="ml-1 font-semibold">{{ total_count }}</strong></span>
     <span>Completadas: <strong class="ml-1 font-semibold">{{ completed_count }}</strong></span>

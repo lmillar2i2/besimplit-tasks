@@ -1,4 +1,6 @@
-<!-- tasks/templates/tasks/partials/task_list_partial.html -->
+
+<!-- task_list_partial.html, lista de tareas renderizada como conjunto de filas.
+    Se usa cuando se actualiza el listado por filtros con HTMX. -->
 <div id="task-list" class="space-y-2">
     {% for task in tasks %}
         {% include "tasks/partials/task_row_partial.html" %}

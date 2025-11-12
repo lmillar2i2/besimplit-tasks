@@ -1,10 +1,12 @@
-# tasks/forms.py
+
+# forms.py, define formularios de Django para crear y editar tareas.
+# Los widgets agregan clases y placeholders en los templates.
 from django import forms
 from .models import Task
 
 
 class TaskForm(forms.ModelForm):
-    """Formulario para crear y editar tareas"""
+    """Formulario para crear y editar tareas con validaciones simples de título y descripción."""
     
     class Meta:
         model = Task
@@ -34,7 +36,7 @@ class TaskForm(forms.ModelForm):
         }
     
     def clean_title(self):
-        """Validación  para el título"""
+        """Normaliza espacios, exige longitud mínima y evita títulos solo numéricos."""
         title = self.cleaned_data.get('title')
         
         if title:
@@ -56,7 +58,7 @@ class TaskForm(forms.ModelForm):
         return title
     
     def clean_description(self):
-        """Validación para la descripción"""
+        """Normaliza espacios y  longitud máxima"""
         description = self.cleaned_data.get('description')
         
         if description:
@@ -69,10 +71,10 @@ class TaskForm(forms.ModelForm):
                     'La descripción no puede exceder 500 caracteres.'
                 )
         
-        return description or ''  # Devuelve string vacío si es None
+        return description or ''  # devuelve string vacío si es None
     
     def __init__(self, *args, **kwargs):
-        """Inicialización personalizada del formulario"""
+        """Ajusta etiquetas y ayuda de campos al construir el form."""
         super().__init__(*args, **kwargs)
         
         # Agrega asterisco a campos requeridos
@@ -80,7 +82,7 @@ class TaskForm(forms.ModelForm):
             if field.required:
                 field.label = f"{field.label} *"
         
-        # Configuración adicional para cada campo
+        # configuración adicional para cada campo
         self.fields['title'].help_text = 'Mínimo 3 caracteres'
         self.fields['description'].required = False
         self.fields['description'].help_text = 'Máximo 500 caracteres'

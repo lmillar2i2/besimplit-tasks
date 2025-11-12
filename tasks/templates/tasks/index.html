@@ -1,4 +1,6 @@
-<!-- tasks/templates/tasks/index.html -->
+
+<!-- @index.html: página principal de tareas.
+     Muestra cabecera con estadísticas (vía HTMX), filtros, formulario de creación y la lista. -->
 {% extends "tasks/base.html" %}
 
 {% block title %}Mis Tareas{% endblock %}
@@ -16,7 +18,10 @@
                 Exportar CSV
             </a>
         </div>
-        <!-- Contenedor de estadísticas -->
+        <!-- Contenedor de estadísticas:
+             hx-get, carga el parcial de stats desde el servidor
+             hx-trigger, al cargar y cuando se dispare 'taskChanged'
+             hx-swap, reemplaza el propio contenedor -->
         <div id="task-stats"
              hx-get="{% url 'tasks:stats' %}"
              hx-trigger="load, taskChanged from:body"
@@ -37,7 +42,10 @@
         </div>
     </div>
     
-    <!-- Filtros -->
+    <!-- Filtros:
+         hx-get, pide al listado filtrado
+         hx-target, actualiza solo el contenedor de la lista
+         hx-push-url, actualiza la URL para que el filtro sea navegable -->
     <div class="mb-6 flex flex-wrap gap-2">
         <button hx-get="{% url 'tasks:index' %}?filter=all" 
                 hx-target="#task-list"
